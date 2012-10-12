@@ -158,10 +158,20 @@ public class ZeroSMS extends Activity {
 		    	
 		    	/* send raw pdu */
 		    	Log.d(TAG,"Sending SMS via sendRawPdu() ...");
-		    	Method m = SMSDispatcher.class.getDeclaredMethod("sendRawPdu", b.getClass(), b.getClass(), PendingIntent.class, PendingIntent.class);
-		    	m.setAccessible(true);
-		    	m.invoke(sms_disp, pdus.encodedScAddress, pdus.encodedMessage, null, null);
-		    	
+		    	try
+		    	{
+		    		/* Android 2.2 -> 4.0.* */
+			    	Method m = SMSDispatcher.class.getDeclaredMethod("sendRawPdu", b.getClass(), b.getClass(), PendingIntent.class, PendingIntent.class);
+			    	m.setAccessible(true);
+			    	m.invoke(sms_disp, pdus.encodedScAddress, pdus.encodedMessage, null, null);
+		    	}
+		    	catch(NoSuchMethodException e)
+		    	{
+		    		/* Android 4.1.2 */
+			    	Method m = SMSDispatcher.class.getDeclaredMethod("sendRawPdu", b.getClass(), b.getClass(), PendingIntent.class, PendingIntent.class, String.class);
+			    	m.setAccessible(true);
+			    	m.invoke(sms_disp, pdus.encodedScAddress, pdus.encodedMessage, null, null, phoneNumber);
+		    	}
 		    	Log.d(TAG, "SMS sent");
 		    	return true;
 		    	
