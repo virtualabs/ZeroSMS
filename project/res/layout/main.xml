@@ -7,18 +7,31 @@
     <TextView  
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content" 
-        android:text="Enter the phone number of recipient"
-        />     
-    <EditText 
-        android:id="@+id/txtPhoneNo"  
-        android:layout_width="fill_parent" 
-        android:layout_height="wrap_content"
-        android:inputType="phone"        
+        android:text="Recipient phone number:"
         />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    	<EditText 
+        	android:id="@+id/txtPhoneNo"  
+        	android:layout_width="wrap_content" 
+        	android:layout_height="wrap_content"
+        	android:inputType="phone"
+        	android:layout_toLeftOf="@+id/btnContact"
+        	android:layout_alignParentLeft="true"          
+        	/>
+    	<ImageButton
+    	    android:id="@+id/btnContact"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:layout_alignParentRight="true"
+    	    android:src="@drawable/ic_menu_invite" />
+    </RelativeLayout>
     <TextView  
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content"         
-        android:text="Message"
+        android:text="Message:"
         />     
     <EditText 
         android:id="@+id/txtMessage"  
