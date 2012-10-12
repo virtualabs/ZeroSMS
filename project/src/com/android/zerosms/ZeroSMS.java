@@ -34,6 +34,7 @@ public class ZeroSMS extends Activity {
 	    private EditText txtPhoneNo;
 	    private EditText txtMessage;
     	private static final int CONTACT_PICKER_RESULT = 1001;
+    	private String TAG = "ZeroSMS";
 	 
 	    /** Called when the activity is first created. */
 	    @Override
@@ -129,16 +130,21 @@ public class ZeroSMS extends Activity {
 	    {
 	    	int size;
 	    	Field f;	    	
+	    	
+	    	Log.d(TAG,"Retrieving phone instance ...");
 	    	Phone phone = PhoneFactory.getDefaultPhone();
 	    	
 	    	/* Get IccSmsInterfaceManager */
+	    	Log.d(TAG,"Retrieving SmsInterfaceManager ...");
 	    	IccSmsInterfaceManager ismsm = phone.getIccSmsInterfaceManager();
 
 			try {
+				Log.d(TAG,"Retrieving mDispatcher ...");
 				f = IccSmsInterfaceManager.class.getDeclaredField("mDispatcher");
 				f.setAccessible(true);
 		    	SMSDispatcher sms_disp = (SMSDispatcher)f.get(ismsm);
 		    	
+		    	Log.d(TAG, "Formatting class 0 SMS ...");
 		    	byte[] b = new byte[0];
 		    	SmsMessage.SubmitPdu pdus =
 		    			SmsMessage.getSubmitPdu(
@@ -151,23 +157,37 @@ public class ZeroSMS extends Activity {
 		    	pdus.encodedMessage[size+5] = (byte)0xF0;
 		    	
 		    	/* send raw pdu */
+		    	Log.d(TAG,"Sending SMS via sendRawPdu() ...");
 		    	Method m = SMSDispatcher.class.getDeclaredMethod("sendRawPdu", b.getClass(), b.getClass(), PendingIntent.class, PendingIntent.class);
 		    	m.setAccessible(true);
 		    	m.invoke(sms_disp, pdus.encodedScAddress, pdus.encodedMessage, null, null);
 		    	
+		    	Log.d(TAG, "SMS sent");
 		    	return true;
 		    	
 			} catch (SecurityException e) {
+				Log.e(TAG, "Exception: Security !");
+				e.printStackTrace();
 				return false;
 			} catch (NoSuchFieldException e) {
+				Log.e(TAG, "Exception: Field mDispatcher not found !");
+				e.printStackTrace();
 				return false;
 			} catch (IllegalArgumentException e) {
+				Log.e(TAG, "Exception: Illegal Argument !");
+				e.printStackTrace();
 				return false;
 			} catch (IllegalAccessException e) {
+				Log.e(TAG, "Exception: Illegal access !");
+				e.printStackTrace();
 				return false;
 			} catch (NoSuchMethodException e) {
+				Log.e(TAG, "Exception: sendRawPdu() not found !");
+				e.printStackTrace();
 				return false;
 			} catch (InvocationTargetException e) {
+				Log.e(TAG, "Exception: cannot invoke sendRawPdu() !");
+				e.printStackTrace();
 				return false;
 			}
 	    }    
