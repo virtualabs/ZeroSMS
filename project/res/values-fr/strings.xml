@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">ZeroSMS</string>
-    <string name="recipient">Recipient phone number:</string>
+    <string name="recipient">Numéro du destinataire:</string>
     <string name="message">Message:</string>
-    <string name="send">Send SMS</string>
+    <string name="send">Envoyer le SMS</string>
 </resources>

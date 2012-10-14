@@ -7,7 +7,7 @@
     <TextView  
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content" 
-        android:text="Recipient phone number:"
+        android:text="@string/recipient"
         />
     <RelativeLayout
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
     <TextView  
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content"         
-        android:text="Message:"
+        android:text="@string/message"
         />     
     <EditText 
         android:id="@+id/txtMessage"  
@@ -43,6 +43,5 @@
         android:id="@+id/btnSendSMS"  
         android:layout_width="fill_parent" 
         android:layout_height="wrap_content"
-        android:text="Send SMS"
-        />    
+        android:text="@string/send"/>    
 </LinearLayout>
