@@ -10,7 +10,7 @@ How to install
 
 Simply use adb to drop it onto your phone:
 
-    adb shell mount -o rw,remount /system
+    adb remount
     adb push ZeroSms-signed.apk /system/app
 
 And voila !
